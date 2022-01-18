@@ -223,14 +223,14 @@ export const handleInteraction =
       const viewSubmissionPayload =
         payload as SlackViewSubmissionRequestPayload;
 
-      res.statusCode = 200;
-      res.end();
-
       await configuredViewSubmission.handler(
         viewSubmissionPayload,
         viewSubmissionPayload.view.state.values,
         viewSubmissionPayload.view.private_metadata
       );
+
+      res.statusCode = 200;
+      res.end();
 
       return;
     }
@@ -257,14 +257,14 @@ export const handleInteraction =
         );
       }
 
-      res.statusCode = 200;
-      res.end();
-
       await configuredWorkflowStepEdit.handler(
         interactionPayload,
         trigger_id,
         workflow_step
       );
+
+      res.statusCode = 200;
+      res.end();
 
       return;
     }
@@ -300,11 +300,11 @@ export const handleInteraction =
       );
     }
 
-    res.statusCode = 200;
-    res.end();
-
     await configuredInteraction.handler(
       interactionPayload,
       getActionValue(action)
     );
+
+    res.statusCode = 200;
+    res.end();
   };
