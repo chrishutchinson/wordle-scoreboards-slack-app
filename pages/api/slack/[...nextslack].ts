@@ -83,7 +83,11 @@ export default NextSlack({
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `*${scores.length}* team members played today, and the best attempt was *${fewestAttempts} guess*`,
+                text: `*${
+                  scores.length
+                }* team members played today, and the best attempt was *${fewestAttempts} ${
+                  fewestAttempts === 1 ? "guess" : "guesses"
+                }*`,
               },
             },
             {
@@ -235,7 +239,11 @@ ${scores
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `*${scores.length}* team members played today, and the best attempt was *${fewestAttempts} guess*`,
+                text: `*${
+                  scores.length
+                }* team members played today, and the best attempt was *${fewestAttempts} ${
+                  fewestAttempts === 1 ? "guess" : "guesses"
+                }*`,
               },
             },
             {

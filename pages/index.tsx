@@ -1,5 +1,6 @@
 import { useSession, signIn, signOut } from "next-auth/client";
 import Image from "next/image";
+import { AddToSlackButton } from "../components/AddToSlackButton/AddToSlackButton";
 
 const AuthContainer = () => {
   const [session] = useSession();
@@ -15,8 +16,7 @@ const AuthContainer = () => {
 
   return (
     <div>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <AddToSlackButton />
     </div>
   );
 };
@@ -29,6 +29,7 @@ const Home = () => {
         flexDirection: "column",
         maxWidth: 1000,
         margin: "0 auto",
+        padding: "30px",
       }}
     >
       <div
@@ -46,28 +47,40 @@ const Home = () => {
         >
           <Image
             src="/logo.png"
-            width="40"
-            height="40"
+            width="100"
+            height="100"
             alt="Wordle Scoreboards Logo"
           />
         </div>
 
-        <h1>
-          Wordle Scoreboards <small>for Slack</small>
-        </h1>
+        <div>
+          <h1>
+            Wordle Scoreboards <small>for Slack</small>
+          </h1>
+          <p>
+            Compete with your teammates at the most viral word game since the
+            last viral word game!
+          </p>
+        </div>
       </div>
       <hr />
-
-      <AuthContainer />
-
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/nqjn7EwD90U"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
+      <div
+        style={{
+          marginBottom: "30px",
+        }}
+      >
+        <AuthContainer />
+      </div>
+      <div>
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/nqjn7EwD90U"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
     </div>
   );
 };
