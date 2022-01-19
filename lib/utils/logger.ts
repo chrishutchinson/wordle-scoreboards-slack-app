@@ -4,7 +4,7 @@ export const logger = winston.createLogger({
   level: "info",
   format: winston.format.json(),
   defaultMeta: {
-    service: "sphere-next",
+    service: "wordle-scoreboards",
   },
   transports: [
     new winston.transports.Console({

@@ -1,5 +1,6 @@
 import { Provider } from "next-auth/client";
-import "../styles/globals.css";
+import { ThemeProvider } from "theme-ui";
+import { theme } from "../theme";
 
 export default function App({
   Component,
@@ -7,7 +8,9 @@ export default function App({
 }) {
   return (
     <Provider session={session}>
-      <Component {...pageProps} />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
     </Provider>
   );
 }
