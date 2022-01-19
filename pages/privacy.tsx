@@ -11,10 +11,10 @@ const Privacy = () => {
         </Container>
 
         <Text as="p" variant="paragraph">
-          Your privacy is important to us. It is Wordle Scoreboards' policy to
-          respect your privacy and comply with any applicable law and regulation
-          regarding any personal information we may collect about you, including
-          across our website,{" "}
+          Your privacy is important to us. It is Wordle Scoreboards&apos; policy
+          to respect your privacy and comply with any applicable law and
+          regulation regarding any personal information we may collect about
+          you, including across our website,{" "}
           <Link href="https://wordle-scoreboards.chrishutchinson.me">
             https://wordle-scoreboards.chrishutchinson.me
           </Link>
