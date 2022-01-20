@@ -17,4 +17,7 @@ export const config = {
     baseIndex: 213,
     baseDate: new Date("2022-01-18"),
   },
+  panelbear: {
+    siteId: "HJITciLkcHC",
+  },
 };
