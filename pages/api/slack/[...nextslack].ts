@@ -178,8 +178,9 @@ ${scores
                       text: "Select a channel",
                       emoji: true,
                     },
-                    initial_channel:
-                      request.workflow_step.inputs.channelId.value || null,
+                    initial_channel: request.workflow_step.inputs.channelId
+                      ? request.workflow_step.inputs.channelId.value
+                      : undefined,
                     action_id: "select_daily_summary_destination",
                   },
                 ],

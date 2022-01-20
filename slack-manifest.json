@@ -1,0 +1,55 @@
+{
+  "display_information": {
+    "name": "Wordle Scoreboards (DEV)",
+    "description": "Compete with your teammates at the most viral word game since the last viral word game!",
+    "background_color": "#333333",
+    "long_description": "Compete with your teammates at the most viral word game since the last viral word game! Who's seen their last grid of emoji squares? Who's your team's Wordle champion? Who's headed to the Wordle Internationals?"
+  },
+  "features": {
+    "bot_user": {
+      "display_name": "Wordle Scoreboards (DEV)",
+      "always_online": true
+    },
+    "workflow_steps": [
+      {
+        "name": "Get daily Wordle summary",
+        "callback_id": "daily_summary"
+      }
+    ]
+  },
+  "oauth_config": {
+    "redirect_urls": ["https://wordle-scoreboards-dev.ngrok.io"],
+    "scopes": {
+      "bot": [
+        "channels:join",
+        "chat:write",
+        "team:read",
+        "users:read",
+        "users.profile:read",
+        "channels:read",
+        "groups:read",
+        "channels:history",
+        "workflow.steps:execute",
+        "app_mentions:read"
+      ]
+    }
+  },
+  "settings": {
+    "event_subscriptions": {
+      "request_url": "https://wordle-scoreboards-dev.ngrok.io/api/slack/event",
+      "bot_events": [
+        "app_mention",
+        "member_joined_channel",
+        "message.channels",
+        "workflow_step_execute"
+      ]
+    },
+    "interactivity": {
+      "is_enabled": true,
+      "request_url": "https://wordle-scoreboards-dev.ngrok.io/api/slack/interaction"
+    },
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": false
+  }
+}

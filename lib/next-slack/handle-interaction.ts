@@ -198,7 +198,6 @@ export const handleInteraction =
   ): NextApiHandler =>
   async (req, res) => {
     const payload = parsePayload(req.body.payload);
-
     if (payload.type === "view_submission") {
       if (!payload.view) {
         throw new Error("No view sent with payload");
