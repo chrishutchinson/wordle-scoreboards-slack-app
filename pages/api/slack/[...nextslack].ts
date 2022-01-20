@@ -57,6 +57,18 @@ export default NextSlack({
                   text: `No one has played today's Wordle #${wordleNumber}!`,
                 },
               },
+              {
+                type: "divider",
+              },
+              {
+                type: "context",
+                elements: [
+                  {
+                    type: "mrkdwn",
+                    text: `_*Sent via Wordle Scoreboards* • <${config.app.aboutUrl}|About> • <${config.app.bugReportUrl}|Report a bug>_`,
+                  },
+                ],
+              },
             ],
             text: "No one has played Wordle today!",
           });
@@ -214,6 +226,18 @@ ${scores
                   text: `No one has played today's Wordle #${wordleNumber}!`,
                 },
               },
+              {
+                type: "divider",
+              },
+              {
+                type: "context",
+                elements: [
+                  {
+                    type: "mrkdwn",
+                    text: `_*Sent via Wordle Scoreboards* • <${config.app.aboutUrl}|About> • <${config.app.bugReportUrl}|Report a bug>_`,
+                  },
+                ],
+              },
             ],
             text: "No one has played Wordle today!",
           });
@@ -297,6 +321,18 @@ ${scores
                 text: "Hi, I'm the Wordle scoreboard bot, here to track your Wordle scores for your team! I'll :eyes: look out for any Wordle messages you send, and report back with a daily summary and a celebration of your team's best Wordler!",
               },
             },
+            {
+              type: "divider",
+            },
+            {
+              type: "context",
+              elements: [
+                {
+                  type: "mrkdwn",
+                  text: `_*Sent via Wordle Scoreboards* • <${config.app.aboutUrl}|About> • <${config.app.bugReportUrl}|Report a bug>_`,
+                },
+              ],
+            },
           ],
           text: "Hi, I'm the Wordle scoreboard bot, here to track your Wordle scores for your team! I'll look out for any Wordle messages you send, and report back with a daily summary and a celebration of your team's best Wordler!",
         });
@@ -331,6 +367,18 @@ ${scores
                     emoji: true,
                   },
                   action_id: "get_summary",
+                },
+              ],
+            },
+            {
+              type: "divider",
+            },
+            {
+              type: "context",
+              elements: [
+                {
+                  type: "mrkdwn",
+                  text: `_*Sent via Wordle Scoreboards* • <${config.app.aboutUrl}|About> • <${config.app.bugReportUrl}|Report a bug>_`,
                 },
               ],
             },
