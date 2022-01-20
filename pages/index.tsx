@@ -32,6 +32,7 @@ const Home = () => {
           content="Compete with your teammates at the most viral word game since the last viral word game!"
         />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta
           property="og:url"
           content="https://wordle-scoreboards.chrishutchinson.me/"
