@@ -11,13 +11,39 @@ import { getWebClient } from "../../../lib/slack/client";
 import { getCurrentPuzzleNumber } from "../../../lib/utils/wordle";
 
 const checkMessageForWordleSyntax = (text: string) => {
-  const matches = text.match(/Wordle \d+ \d\/6/);
+  const scoreMatches = text.match(/Wordle \d+ \d\/6/);
 
-  if (!matches) {
+  if (!scoreMatches) {
+    return false;
+  }
+
+  const gridMatches = text.match(
+    /^(:black_large_square:|:white_large_square:|:large_yellow_square:|:large_green_square:){5}$/gm
+  );
+
+  if (gridMatches.length < 1 || gridMatches.length > 6) {
     return false;
   }
 
   return true;
+};
+
+const parseGridLines = (gridLines: string[]) => {
+  return gridLines.map((line) => {
+    return line.split("::").map((square) => {
+      const type = square.replace(":", "");
+
+      if (type === "large_green_square") {
+        return 1;
+      }
+
+      if (type === "large_yellow_square") {
+        return 0.5;
+      }
+
+      return 0;
+    });
+  });
 };
 
 const parseWordleMessage = (message: string) => {
@@ -25,9 +51,22 @@ const parseWordleMessage = (message: string) => {
 
   const [, id, attempts] = score.match(/Wordle (\d+) (\d)\/6/);
 
+  const gridLines = parseGridLines(
+    message.match(
+      /^(:black_large_square:|:white_large_square:|:large_yellow_square:|:large_green_square:){5}$/gm
+    )
+  );
+
+  const firstGuessAccuracy = gridLines[0].reduce(
+    (acc, square) => acc + square,
+    0
+  );
+
   return {
     id: parseInt(id),
     attempts: parseInt(attempts),
+    firstGuessAccuracy,
+    gridLines,
   };
 };
 
@@ -79,6 +118,10 @@ export default NextSlack({
           a.attempts < b.attempts ? -1 : 1
         )[0].attempts;
 
+        const bestFirstGuess = scores.sort((a, b) =>
+          a.firstGuessAccuracy < b.firstGuessAccuracy ? 1 : -1
+        )[0].firstGuessAccuracy;
+
         await webClient.chat.postMessage({
           channel: request.channel.id,
           unfurl_links: false,
@@ -113,6 +156,17 @@ ${scores
   .join("\n")}`,
               },
             },
+            //             {
+            //               type: "section",
+            //               text: {
+            //                 type: "mrkdwn",
+            //                 text: `:brain: And to these team members who had the closest first guess:
+            // ${scores
+            //   .filter((s) => s.firstGuessAccuracy === bestFirstGuess)
+            //   .map((s) => `• <@${s.userId}>`)
+            //   .join("\n")}`,
+            //               },
+            //             },
             {
               type: "divider",
             },
@@ -248,6 +302,10 @@ ${scores
           a.attempts < b.attempts ? -1 : 1
         )[0].attempts;
 
+        const bestFirstGuess = scores.sort((a, b) =>
+          a.firstGuessAccuracy < b.firstGuessAccuracy ? 1 : -1
+        )[0].firstGuessAccuracy;
+
         await webClient.chat.postMessage({
           channel: request.event.workflow_step.inputs.channelId.value,
           unfurl_links: false,
@@ -282,6 +340,17 @@ ${scores
   .join("\n")}`,
               },
             },
+            //             {
+            //               type: "section",
+            //               text: {
+            //                 type: "mrkdwn",
+            //                 text: `:brain: And to these team members who had the best first guess:
+            // ${scores
+            //   .filter((s) => s.firstGuessAccuracy === bestFirstGuess)
+            //   .map((s) => `• <@${s.userId}>`)
+            //   .join("\n")}`,
+            //               },
+            //             },
             {
               type: "divider",
             },
@@ -400,13 +469,16 @@ ${scores
           return;
         }
 
-        const { id, attempts } = parseWordleMessage(request.event.text);
+        const { id, attempts, firstGuessAccuracy, gridLines } =
+          parseWordleMessage(request.event.text);
 
         await createScore({
           userId: request.event.user,
           workspaceId: request.team_id,
           wordleId: id,
           attempts,
+          gridLines,
+          firstGuessAccuracy,
         });
 
         await webClient.chat.postMessage({

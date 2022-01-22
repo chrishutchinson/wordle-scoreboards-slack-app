@@ -5,6 +5,8 @@ type ScoreInput = {
   workspaceId: string;
   attempts: number;
   wordleId: number;
+  gridLines: number[][];
+  firstGuessAccuracy: number;
 };
 
 type Score = {
@@ -13,6 +15,8 @@ type Score = {
   workspaceId: string;
   wordleId: number;
   attempts: number;
+  gridLines: number[][];
+  firstGuessAccuracy: number;
 };
 
 const isValidScore = (maybeScore: any): maybeScore is Score => {
@@ -22,6 +26,7 @@ const isValidScore = (maybeScore: any): maybeScore is Score => {
     maybeScore.wordleId &&
     maybeScore.workspaceId &&
     maybeScore.userId
+    // && maybeScore.firstGuessAccuracy
   );
 };
 
@@ -30,11 +35,13 @@ export const createScore = (input: ScoreInput) => {
     .put({
       TableName: "wordle-teams-slack-scores",
       Item: {
-        id: `${input.userId}-${input.workspaceId}`,
+        id: `${input.userId}-${input.workspaceId}-${input.wordleId}`,
         userId: input.userId,
         workspaceId: input.workspaceId,
         wordleId: input.wordleId,
         attempts: input.attempts,
+        gridLines: input.gridLines,
+        firstGuessAccuracy: input.firstGuessAccuracy,
       },
     })
     .promise();
@@ -49,7 +56,7 @@ export const getScore = async (
     .get({
       TableName: "wordle-teams-slack-scores",
       Key: {
-        id: `${userId}-${workspaceId}`,
+        id: `${userId}-${workspaceId}-${wordleId}`,
         wordleId,
       },
     })
